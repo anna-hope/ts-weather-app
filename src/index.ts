@@ -1,10 +1,14 @@
+import dotenv from "dotenv";
 import path = require("path");
 import express = require("express");
 import hbs = require('hbs');
 import { getForecast } from "./utils/forecast";
 import { getGeocode, Geocode } from "./utils/geocode";
 
+dotenv.config();
+
 const app = express();
+const port = process.env.PORT || 3000;
 
 
 const viewsPath = path.join(__dirname, "../templates/views");
@@ -111,7 +115,7 @@ app.get('*', (req, res) => {
     res.status(404).render('404', getPageData('404 Not Found', 'page not found'));
 })
 
-app.listen(3000, () => {
-    console.log('Server is up on port 3000');
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}`);
 });
 
