@@ -8,8 +8,7 @@
     "postinstall": "tsc && cd client && tsc",
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w",
-    "deploy": "git add . && git commit -m Heroku && git push heroku main",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
   "keywords": [],
   "engines": {
