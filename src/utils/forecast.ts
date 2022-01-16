@@ -41,6 +41,6 @@ export const getForecast = async (latitude: number, longitude: number): Promise<
     const { temperature: currentTemp, feelslike: feelsLike, weather_descriptions, precip } = currentWeather;
     const weatherDescription = weather_descriptions[0];
     const forecast = `${weatherDescription}. It is currently ${currentTemp}. It feels like ${feelsLike}.
-    Chance of precipitation: ${precip}%`;
+    Chance of precipitation: ${precip * 100}%`;
     return forecast;
 }
