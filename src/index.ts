@@ -33,17 +33,6 @@ const getPageData = (title: string, message?: string, name: string='anna'): Page
     return {title, message, name}
 }
 
-
-const toTitleCase = (value: string): string => {
-    const tokens = value.split(' ');
-    const newTokens: string[] = [];
-    for (let token of tokens) {
-        let titleToken = token.charAt(0).toUpperCase() + token.slice(1);
-        newTokens.push(titleToken);
-    }
-    return newTokens.join(' ');
-}
-
 app.get('/', (req, res) => {
     res.render('index', getPageData('Weather', 'get you some weather'));
 })
