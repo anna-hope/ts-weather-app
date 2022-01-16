@@ -66,24 +66,46 @@ const getForecastResponse = async (address: string): Promise<any> => {
 
 
 app.get('/weather', (req, res) => {
-    if (!req.query.address) {
+    if (req.query.address) {
+        let address: string;
+
+        if (req.query.address instanceof Array) {
+            address = req.query.address[0] as string;
+        } else {
+            address = req.query.address as string;
+        }
+
+        return getForecastResponse(address)
+        .then((response) => res.send(response)); 
+
+    } else if (req.query.latitude && req.query.longitude) {
+        let latitudeString: string;
+        if (req.query.latitude instanceof Array) {
+            latitudeString = req.query.latitude[0] as string;
+        } else {
+            latitudeString = req.query.latitude as string;
+        }
+
+        let longitudeString: string;
+        if (req.query.longitude instanceof Array) {
+            longitudeString = req.query.longitude[0] as string;
+        } else {
+            longitudeString = req.query.longitude as string;
+        }
+
+        const latitude = Number.parseFloat(latitudeString);
+        const longitude = Number.parseFloat(longitudeString);
+
+        return getForecast(latitude, longitude)
+        .then((forecast) => res.send({ forecast }),
+        (reason) => res.send({ error: reason }));
+    } else {
         return res.send({
             error: 'you must provide an address'
         });
     }
 
-    let address: string;
-
-    if (req.query.address instanceof Array) {
-        address = req.query.address[0] as string;
-    } else {
-        address = req.query.address as string;
-    }
-
-    getForecastResponse(address)
-    .then((response) => res.send(response)); 
 })
-
 
 app.get('/help/*', (req, res) => {
     res.status(404).render('help-404', getPageData('not found', 'help article not found'));
